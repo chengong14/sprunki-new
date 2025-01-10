@@ -17,6 +17,8 @@ const ReviewSection = () => {
   const [newReview, setNewReview] = useState('');
   const [author, setAuthor] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
 
   const hashtags = [
     'sprunki new version',
@@ -25,9 +27,17 @@ const ReviewSection = () => {
     'incredibox sprunki mod',
     'sprunki incredibox scratch'
   ];
-  
+
+  // Handle client-side initialization
+  useEffect(() => {
+    setIsMounted(true);
+    setShareUrl(window.location.href);
+  }, []);
+
   // Load reviews from localStorage on component mount
   useEffect(() => {
+    if (!isMounted) return;
+
     const savedReviews = localStorage.getItem('sprunkiReviews');
     if (savedReviews) {
       setReviews(JSON.parse(savedReviews));
@@ -54,11 +64,11 @@ const ReviewSection = () => {
       setReviews(initialReviews);
       localStorage.setItem('sprunkiReviews', JSON.stringify(initialReviews));
     }
-  }, []);
+  }, [isMounted]);
 
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newReview.trim() || !author.trim() || isSubmitting) return;
+    if (!newReview.trim() || !author.trim() || isSubmitting || !isMounted) return;
 
     setIsSubmitting(true);
 
@@ -81,6 +91,8 @@ const ReviewSection = () => {
   };
 
   const handleLike = (reviewId: string) => {
+    if (!isMounted) return;
+
     const updatedReviews = reviews.map(review => {
       if (review.id === reviewId) {
         return {
@@ -95,8 +107,11 @@ const ReviewSection = () => {
     localStorage.setItem('sprunkiReviews', JSON.stringify(updatedReviews));
   };
 
-  const shareUrl = encodeURIComponent(window.location.href);
   const shareText = encodeURIComponent('Check out this amazing game - Sprunki-Newest! 🎮 #SprunkiGame');
+
+  if (!isMounted) {
+    return null; // or a loading spinner
+  }
 
   return (
     <section id="reviews" className="py-16 bg-gray-900">
@@ -194,7 +209,7 @@ const ReviewSection = () => {
           <h3 className="text-2xl font-bold text-white mb-8">Share Your Experience</h3>
           <div className="flex justify-center space-x-6 mb-8">
             <a
-              href={`https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`}
+              href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-300 transition-colors"
@@ -202,7 +217,7 @@ const ReviewSection = () => {
               <FaTwitter className="w-8 h-8" />
             </a>
             <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-500 transition-colors"
@@ -210,7 +225,7 @@ const ReviewSection = () => {
               <FaFacebook className="w-8 h-8" />
             </a>
             <a
-              href={`https://reddit.com/submit?url=${shareUrl}&title=${shareText}`}
+              href={`https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${shareText}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-orange-600 hover:text-orange-500 transition-colors"
