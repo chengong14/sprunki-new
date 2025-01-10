@@ -33,7 +33,7 @@ const GameSection = () => {
             About the Game
           </h2>
           <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto text-center">
-            If you're a fan of Incredibox, get ready to be amazed by <span className="font-bold text-purple-400">Sprunki Incredibox</span>—a fan-made mod that elevates the original game's creativity and music-mixing fun to a whole new level. At <span className="font-bold text-purple-400">sprunki-new.org</span>, we're thrilled to present this dynamic and vibrant experience, packed with fresh features and unique elements that make it a must-play for music enthusiasts and gamers alike.
+            If you&apos;re a fan of Incredibox, get ready to be amazed by <span className="font-bold text-purple-400">Sprunki Incredibox</span>—a fan-made mod that elevates the original game&apos;s creativity and music-mixing fun to a whole new level. At <span className="font-bold text-purple-400">sprunki-new.org</span>, we&apos;re thrilled to present this dynamic and vibrant experience, packed with fresh features and unique elements that make it a must-play for music enthusiasts and gamers alike.
           </p>
         </motion.div>
 
