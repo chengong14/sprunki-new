@@ -11,6 +11,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Sprunki-Newest - A Creative Music Gaming Experience",
   description: "Experience the next evolution of Incredibox with Sprunki-Newest, a fan-made mod that brings fresh features and unique elements to the classic music-mixing game.",
+  openGraph: {
+    title: "Sprunki-Newest",
+    description: "Experience the next evolution of Incredibox with Sprunki-Newest, a fan-made mod that brings fresh features and unique elements to the classic music-mixing game.",
+  }
 };
 
 export default function RootLayout({
