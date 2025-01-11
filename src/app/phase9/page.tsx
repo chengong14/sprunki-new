@@ -1,6 +1,10 @@
 'use client';
 import GameLayout from '../components/GameLayout';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'sprunki phase 9',
+};
 export default function Phase7() {
   return (
     <GameLayout
