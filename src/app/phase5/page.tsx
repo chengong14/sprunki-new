@@ -1,10 +1,11 @@
-'use client';
 import GameLayout from '../components/GameLayout';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'sprunki phase 5',
+  title: 'Sprunki Phase 5',
+  description: 'Discover Sprunki Phase 5, an innovative fan-made Incredibox mod featuring unique sounds and characters.',
 };
+
 export default function Phase5() {
   return (
     <GameLayout
