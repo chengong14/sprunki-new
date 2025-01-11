@@ -10,52 +10,96 @@ interface GameLayoutProps {
 }
 
 const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
+  const gameVersions = [
+    { name: 'Phase 9', href: '/phase9', current: version === 'Phase 9' },
+    { name: 'Phase 8', href: '/', current: version === 'Phase 8' },
+    { name: 'Phase 7', href: '/phase7', current: version === 'Phase 7' },
+    { name: 'Phase 6', href: '/phase6', current: version === 'Phase 6' },
+    { name: 'Phase 5', href: '/phase5', current: version === 'Phase 5' },
+    { name: 'Phase 4', href: '/phase4', current: version === 'Phase 4' },
+    { name: 'Phase 3', href: '/phase3', current: version === 'Phase 3' },
+  ];
+
   return (
     <main className="min-h-screen bg-gray-900">
       <Header />
       <section className="pt-24 pb-12 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-              Sprunki {version}
-            </h1>
-          </motion.div>
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Main Content */}
+            <div className="flex-1">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h1 className="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  Sprunki {version}
+                </h1>
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-2xl p-1"
-          >
-            <div className="bg-gray-800 rounded-xl overflow-hidden">
-              <iframe
-                src={gameUrl}
-                className="w-full h-[700px]"
-                allowFullScreen
-              />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-2xl p-1"
+              >
+                <div className="bg-gray-800 rounded-xl overflow-hidden">
+                  <iframe
+                    src={gameUrl}
+                    className="w-full h-[700px]"
+                    allowFullScreen
+                  />
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-12 text-center"
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:from-purple-700 hover:to-pink-700 transition-colors duration-300"
+            {/* Side Navigation */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:w-64 shrink-0"
             >
-              Back to Home
-              <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </Link>
-          </motion.div>
+              <div className="sticky top-24 bg-gray-800 rounded-xl p-6 shadow-xl">
+                <h3 className="text-xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  Game Versions
+                </h3>
+                <nav className="space-y-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-700">
+                  {gameVersions.map((gameVersion) => (
+                    <Link
+                      key={gameVersion.name}
+                      href={gameVersion.href}
+                      className={`block px-4 py-3 rounded-lg transition-colors duration-200 ${
+                        gameVersion.current
+                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                          : 'text-gray-300 hover:bg-gray-700'
+                      }`}
+                    >
+                      {gameVersion.name}
+                    </Link>
+                  ))}
+                </nav>
+                <div className="mt-8 pt-6 border-t border-gray-700">
+                  <h4 className="text-sm font-medium text-gray-400 mb-4">Quick Links</h4>
+                  <nav className="space-y-2">
+                    <Link href="/#about" className="block text-gray-300 hover:text-white transition-colors duration-200">
+                      About
+                    </Link>
+                    <Link href="/#guide" className="block text-gray-300 hover:text-white transition-colors duration-200">
+                      How to Play
+                    </Link>
+                    <Link href="/#videos" className="block text-gray-300 hover:text-white transition-colors duration-200">
+                      Videos
+                    </Link>
+                    <Link href="/#reviews" className="block text-gray-300 hover:text-white transition-colors duration-200">
+                      Reviews
+                    </Link>
+                  </nav>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
       <Footer />

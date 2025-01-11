@@ -10,10 +10,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Sprunki-Phase - A Creative Music Gaming Experience",
-  description: "The Sprunki Phase is a fan-made mod series created by enthusiasts for the popular rhythm game Incredibox on Scratch. These mods introduce a unique twist by incorporating dark and horror-themed elements while staying true to the game's original style. Each phase features new characters, delivering a fresh and distinct experience.",
+  description: "The Sprunki Phase is a fan-made mod series created by enthusiasts for the popular rhythm game Incredibox on Scratch. These mods introduce a unique twist by incorporating dark and horror-themed elements while staying true to the game's original style. Each phase features new characters, delivering a fresh and distinct experience. This website contains all versions of sprunki phase.",
   openGraph: {
     title: "Sprunki-Phase",
-    description: "The Sprunki Phase is a fan-made mod series created by enthusiasts for the popular rhythm game Incredibox on Scratch. These mods introduce a unique twist by incorporating dark and horror-themed elements while staying true to the game's original style. Each phase features new characters, delivering a fresh and distinct experience.",
+    description: "The Sprunki Phase is a fan-made mod series created by enthusiasts for the popular rhythm game Incredibox on Scratch. These mods introduce a unique twist by incorporating dark and horror-themed elements while staying true to the game's original style. Each phase features new characters, delivering a fresh and distinct experience. This website contains all versions of sprunki phase.",
   }
 };
 
