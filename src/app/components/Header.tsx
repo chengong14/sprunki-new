@@ -21,19 +21,10 @@ const Header = () => {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-4"
+            className="flex items-center"
           >
             <Link href="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
               Sprunki-Newest
-            </Link>
-            <Link
-              href="https://allinai.tools"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="The Best AI Tools"
-              className="text-sm text-gray-300 hover:text-white transition-colors duration-200 hidden sm:block"
-            >
-              All in AI Tools
             </Link>
           </motion.div>
 
@@ -88,16 +79,6 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                href="https://allinai.tools"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="The Best AI Tools"
-                className="text-gray-300 hover:text-white transition-colors duration-200 sm:hidden"
-                onClick={() => setIsOpen(false)}
-              >
-                All in AI Tools
-              </Link>
             </div>
           </motion.div>
         )}

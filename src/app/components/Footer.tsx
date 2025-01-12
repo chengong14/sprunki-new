@@ -1,5 +1,6 @@
 'use client';
 import { FaTwitter, FaGithub, FaDiscord } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -31,6 +32,17 @@ const Footer = () => {
               <li>
                 <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
                   Contact Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://allinai.tools"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="The Best AI Tools"
+                  className="text-gray-400 hover:text-purple-400 transition-colors"
+                >
+                  All in AI Tools
                 </a>
               </li>
             </ul>
