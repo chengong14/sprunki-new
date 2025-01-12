@@ -35,7 +35,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a
+                <Link
                   href="https://allinai.tools"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -43,7 +43,7 @@ const Footer = () => {
                   className="text-gray-400 hover:text-purple-400 transition-colors"
                 >
                   All in AI Tools
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
