@@ -18,6 +18,8 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
     { name: 'Phase 5', href: '/phase5', current: version === 'Phase 5' },
     { name: 'Phase 4', href: '/phase4', current: version === 'Phase 4' },
     { name: 'Phase 3', href: '/phase3', current: version === 'Phase 3' },
+    { name: 'Phase 2', href: '/phase2', current: version === 'Phase 2' },
+    { name: 'Phase 1', href: '/phase1', current: version === 'Phase 1' },
   ];
 
   return (

@@ -11,6 +11,8 @@ const GameSection = () => {
     { name: 'Phase 5', href: '/phase5', current: false },
     { name: 'Phase 4', href: '/phase4', current: false },
     { name: 'Phase 3', href: '/phase3', current: false },
+    { name: 'Phase 2', href: '/phase2', current: false },
+    { name: 'Phase 1', href: '/phase1', current: false },
   ];
 
   return (
