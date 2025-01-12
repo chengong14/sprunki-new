@@ -11,6 +11,7 @@ interface GameLayoutProps {
 
 const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
   const gameVersions = [
+    { name: 'Glitch', href: '/glitch', current: version === 'Glitch' },
     { name: 'Phase 9', href: '/phase9', current: version === 'Phase 9' },
     { name: 'Phase 8', href: '/', current: version === 'Phase 8' },
     { name: 'Phase 7', href: '/phase7', current: version === 'Phase 7' },

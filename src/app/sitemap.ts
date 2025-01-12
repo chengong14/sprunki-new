@@ -1,17 +1,20 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.sprunki-new.org/';
+  const baseUrl = 'https://www.sprunki-new.org';
   
   // 所有游戏版本的路径
   const gameVersions = [
     '',  // 主页 (Phase 8)
+    '/glitch',
     '/phase9',
     '/phase7',
     '/phase6',
     '/phase5',
     '/phase4',
     '/phase3',
+    '/phase2',
+    '/phase1',
   ];
 
   const currentDate = new Date();
