@@ -35,9 +35,10 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
+                className="text-center mb-8"
               >
-                <h1 className="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                  Sprunki {version}
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  {version === 'Glitch' ? 'Sprunki Glitch - A Unique Musical Experience' : `Sprunki ${version} - A Creative Music Gaming Experience`}
                 </h1>
               </motion.div>
 
@@ -65,9 +66,9 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
               className="lg:w-64 shrink-0"
             >
               <div className="sticky top-24 bg-gray-800 rounded-xl p-6 shadow-xl">
-                <h3 className="text-xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                <h2 className="text-xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                   Game Versions
-                </h3>
+                </h2>
                 <nav className="space-y-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-700">
                   {gameVersions.map((gameVersion) => (
                     <Link
