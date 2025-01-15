@@ -15,6 +15,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/phase3',
     '/phase2',
     '/phase1',
+    '/craft',
+    '/scratch',
+    '/babies',
   ];
 
   const currentDate = new Date();
