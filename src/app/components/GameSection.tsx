@@ -95,6 +95,70 @@ const GameSection = () => {
                 </div>
               </div>
             </motion.div>
+
+            {/* Related Games Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-16 text-white"
+            >
+              <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                More Sprunki Games
+              </h2>
+              <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <Link href="/scratch" className="group">
+                  <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative h-48">
+                      <img
+                        src="/img/scratch.jpg"
+                        alt="Scratch Game"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl mb-2 text-purple-400">Scratch</h3>
+                      <p className="text-gray-300">It is the most popular Scratch project ever produced.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link href="/babies" className="group">
+                  <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative h-48">
+                      <img
+                        src="/img/babies.jpg"
+                        alt="Babies Game"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl mb-2 text-purple-400">Babies</h3>
+                      <p className="text-gray-300">Cute baby characters special to the mode.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link href="/craft" className="group">
+                  <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative h-48">
+                      <img
+                        src="/img/craft.jpg"
+                        alt="Craft Game"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl mb-2 text-purple-400">Craft</h3>
+                      <p className="text-gray-300">this version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </motion.div>
           </div>
 
           {/* Side Navigation */}
@@ -106,7 +170,7 @@ const GameSection = () => {
           >
             <div className="sticky top-24 bg-gray-800 rounded-xl p-6 shadow-xl">
               <h2 className="text-xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                Game Versions
+                Phase Versions
               </h2>
               <nav className="space-y-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-700">
                 {gameVersions.map((version) => (
