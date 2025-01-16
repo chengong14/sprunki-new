@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/craft',
     '/scratch',
     '/babies',
+    '/Relish',
   ];
 
   const currentDate = new Date();

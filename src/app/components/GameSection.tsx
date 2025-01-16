@@ -106,7 +106,7 @@ const GameSection = () => {
               <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                 More Sprunki Games
               </h2>
-              <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                 <Link href="/scratch" className="group">
                   <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
                     <div className="relative h-48">
@@ -154,6 +154,23 @@ const GameSection = () => {
                     <div className="p-6">
                       <h3 className="font-bold text-xl mb-2 text-purple-400">Craft</h3>
                       <p className="text-gray-300">this version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link href="/relish" className="group">
+                  <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <div className="relative h-48">
+                      <img
+                        src="/img/relish.jpg"
+                        alt="Relish Game"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-bold text-xl mb-2 text-purple-400">Relish</h3>
+                      <p className="text-gray-300">Experience the unique blend of relish-themed musical elements in this special mode.</p>
                     </div>
                   </div>
                 </Link>
