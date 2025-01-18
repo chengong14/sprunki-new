@@ -62,7 +62,7 @@ const GameSection = () => {
                 <div className="aspect-w-16 aspect-h-9">
                   <iframe
                     src="https://html-classic.itch.zone/html/12179361/index.html"
-                    className="w-full h-[600px]"
+                    className="w-full h-[430px] sm:h-[500px] lg:h-[600px]"
                     allowFullScreen
                   />
                 </div>
