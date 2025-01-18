@@ -18,7 +18,7 @@ export default function Phase1() {
           </h2>
 
           <p className="text-lg text-gray-300 leading-relaxed">
-            Embark on a captivating journey with Sprunki Phase 1, a unique gaming experience that seamlessly blends adventure and puzzle-solving. Explore vibrant and dynamic environments filled with challenges, obstacles, and enemies. Sprunki Phase 1 encourages creativity and strategic thinking, inviting players to "think outside the box" to progress through its engaging levels.
+            Embark on a captivating journey with Sprunki Phase 1, a unique gaming experience that seamlessly blends adventure and puzzle-solving. Explore vibrant and dynamic environments filled with challenges, obstacles, and enemies. Sprunki Phase 1 encourages creativity and strategic thinking, inviting players to &quot;think outside the box&quot; to progress through its engaging levels.
           </p>
 
           <div>

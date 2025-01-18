@@ -161,7 +161,7 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                       </div>
                       <div className="p-6">
                         <h3 className="font-bold text-xl mb-2 text-purple-400">Craft</h3>
-                        <p className="text-gray-300">this version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
+                        <p className="text-gray-300">This version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
                       </div>
                     </div>
                   </Link>
