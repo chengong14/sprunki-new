@@ -18,7 +18,7 @@ export default function Phase3() {
           </h2>
 
           <p className="text-lg text-gray-300 leading-relaxed">
-            Sprunki Phase 3 is a groundbreaking fan-made modification of Incredibox that reimagines the game's musical landscape. This latest installment in the popular sprunki series introduces fresh styles, contemporary soundscapes, and a host of innovative features that have captivated both seasoned Incredibox players and newcomers alike.
+            Sprunki Phase 3 is a groundbreaking fan-made modification of Incredibox that reimagines the games musical landscape. This latest installment in the popular sprunki series introduces fresh styles, contemporary soundscapes, and a host of innovative features that have captivated both seasoned Incredibox players and newcomers alike.
           </p>
 
           <div>
