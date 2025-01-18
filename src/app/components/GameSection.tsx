@@ -1,8 +1,25 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { IoIosArrowUp } from "react-icons/io";
 
 const GameSection = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const gameVersions = [
     { name: 'Glitch', href: '/glitch', current: false },
     { name: 'Phase 9', href: '/phase9', current: false },
@@ -257,6 +274,17 @@ const GameSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Scroll to Top Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: showScrollTop ? 1 : 0, scale: showScrollTop ? 1 : 0.8 }}
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 z-50 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-colors duration-300"
+        aria-label="Scroll to top"
+      >
+        <IoIosArrowUp className="w-6 h-6" />
+      </motion.button>
     </section>
   );
 };
