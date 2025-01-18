@@ -211,7 +211,7 @@ const GameSection = () => {
                       </li>
                       <li className="flex items-start">
                         <span className="font-bold text-purple-400 mr-2">Dark and Atmospheric Visuals:</span>
-                        Experience the horror theme visually with dark backgrounds and spooky character animations that enhance the game's immersive atmosphere.
+                        Experience the horror theme visually with dark backgrounds and spooky character animations that enhance the games immersive atmosphere.
                       </li>
                     </ul>
                   </div>
