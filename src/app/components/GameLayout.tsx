@@ -30,6 +30,7 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
 
   const gameVersions = [
     { name: 'Glitch', href: '/glitch', current: version === 'Glitch' },
+    { name: 'Phase 10', href: '/phase10', current: version === 'Phase 10' },
     { name: 'Phase 9', href: '/phase9', current: version === 'Phase 9' },
     { name: 'Phase 8', href: '/', current: version === 'Phase 8' },
     { name: 'Phase 7', href: '/phase7', current: version === 'Phase 7' },

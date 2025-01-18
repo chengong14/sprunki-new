@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Glitch() {
   return (
     <GameLayout
-      gameUrl="https://www.cocrea.world/player/1877844066407403521"
+      gameUrl="https://sprunkin.com/games/10293/"
       version="Glitch"
     />
   );
