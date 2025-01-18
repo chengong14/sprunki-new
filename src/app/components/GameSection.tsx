@@ -186,12 +186,43 @@ const GameSection = () => {
                 id="about"
                 className="mt-12 text-white"
               >
-                <h2 className="text-3xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                  About the Game
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  Introducing Sprunki Phase 8: A Chilling Addition to the Incredibox Universe
                 </h2>
-                <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto text-center">
-                  If you&apos;re a fan of Incredibox, get ready to be amazed by <span className="font-bold text-purple-400">Sprunki Incredibox</span>—a fan-made mod that elevates the original game&apos;s creativity and music-mixing fun to a whole new level. At <span className="font-bold text-purple-400">sprunki-new.org</span>, we&apos;re thrilled to present this dynamic and vibrant experience, packed with fresh features and unique elements that make it a must-play for music enthusiasts and gamers alike. This website contains all versions of sprunki phase.
-                </p>
+                <div className="space-y-8 max-w-3xl mx-auto">
+                  <p className="text-lg text-gray-300 leading-relaxed">
+                    Sprunki Phase 8 is the eighth installment in the popular Sprunki Phase series, a collection of fan-made modifications for the rhythm game Incredibox. Developed on the Scratch platform, these mods add unique sounds, animations, and visuals to the game, taking it far beyond its original concept.
+                  </p>
+
+                  <div>
+                    <h3 className="text-xl font-bold text-purple-400 mb-4">What Makes Sprunki Phase 8 Special?</h3>
+                    <ul className="space-y-4 text-gray-300">
+                      <li className="flex items-start">
+                        <span className="font-bold text-purple-400 mr-2">Horror-Themed Experience:</span>
+                        Immerse yourself in a chilling atmosphere with special horror-themed versions of the iconic Incredibox characters.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="font-bold text-purple-400 mr-2">Enhanced Sound Design:</span>
+                        Explore a vast array of sound layers, including eerie rhythms, spooky melodies, and chilling ghostly effects, allowing for the creation of truly unique and spine-tingling musical compositions.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="font-bold text-purple-400 mr-2">Unleash Hidden Animations:</span>
+                        Discover special bonus animations that unlock when you combine sounds in unexpected ways, adding an extra layer of surprise and delight to the gameplay.
+                      </li>
+                      <li className="flex items-start">
+                        <span className="font-bold text-purple-400 mr-2">Dark and Atmospheric Visuals:</span>
+                        Experience the horror theme visually with dark backgrounds and spooky character animations that enhance the game's immersive atmosphere.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-bold text-purple-400 mb-4">The Evolution of Sprunki Phase</h3>
+                    <p className="text-lg text-gray-300 leading-relaxed">
+                      The Sprunki Phase series began as a simple modification for Incredibox, but it has since evolved into a unique and captivating experience. Each phase introduces new elements, pushing the boundaries of creativity and offering players a fresh and exciting way to enjoy the game.
+                    </p>
+                  </div>
+                </div>
               </motion.div>
 
               {/* Guide Section */}

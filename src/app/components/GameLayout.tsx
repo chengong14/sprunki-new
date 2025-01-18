@@ -3,13 +3,31 @@ import Header from './Header';
 import Footer from './Footer';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { IoIosArrowUp } from "react-icons/io";
 
 interface GameLayoutProps {
   gameUrl: string;
   version: string;
+  description?: React.ReactNode;
 }
 
-const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
+const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const gameVersions = [
     { name: 'Glitch', href: '/glitch', current: version === 'Glitch' },
     { name: 'Phase 9', href: '/phase9', current: version === 'Phase 9' },
@@ -85,6 +103,98 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
                   </nav>
                 </div>
               </motion.div>
+
+              {/* More Sprunki Games Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-8 text-white"
+              >
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                  More Sprunki Games
+                </h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+                  <Link href="/scratch" className="group">
+                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                      <div className="relative h-48">
+                        <img
+                          src="/img/scratch.jpg"
+                          alt="Scratch Game"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-bold text-xl mb-2 text-purple-400">Scratch</h3>
+                        <p className="text-gray-300">It is the most popular Scratch project ever produced.</p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link href="/babies" className="group">
+                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                      <div className="relative h-48">
+                        <img
+                          src="/img/babies.jpg"
+                          alt="Babies Game"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-bold text-xl mb-2 text-purple-400">Babies</h3>
+                        <p className="text-gray-300">Cute baby characters special to the mode.</p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link href="/craft" className="group">
+                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                      <div className="relative h-48">
+                        <img
+                          src="/img/craft.jpg"
+                          alt="Craft Game"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-bold text-xl mb-2 text-purple-400">Craft</h3>
+                        <p className="text-gray-300">this version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <Link href="/relish" className="group">
+                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                      <div className="relative h-48">
+                        <img
+                          src="/img/relish.jpg"
+                          alt="Relish Game"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="font-bold text-xl mb-2 text-purple-400">Relish</h3>
+                        <p className="text-gray-300">Experience the unique blend of relish-themed musical elements in this special mode.</p>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* Game Description Section */}
+              {description && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  {description}
+                </motion.div>
+              )}
             </div>
 
             {/* Desktop Side Navigation */}
@@ -136,6 +246,17 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
         </div>
       </section>
       <Footer />
+
+      {/* Scroll to Top Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: showScrollTop ? 1 : 0, scale: showScrollTop ? 1 : 0.8 }}
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 z-50 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-lg transition-colors duration-300"
+        aria-label="Scroll to top"
+      >
+        <IoIosArrowUp className="w-6 h-6" />
+      </motion.button>
     </main>
   );
 };
