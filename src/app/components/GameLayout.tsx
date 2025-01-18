@@ -37,7 +37,7 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
                 transition={{ duration: 0.5 }}
                 className="text-center mb-8"
               >
-                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                   {version === 'Glitch' ? 'Sprunki Glitch - A Unique Musical Experience' : `Sprunki ${version} - A Creative Music Gaming Experience`}
                 </h1>
               </motion.div>
@@ -51,23 +51,52 @@ const GameLayout = ({ gameUrl, version }: GameLayoutProps) => {
                 <div className="bg-gray-800 rounded-xl overflow-hidden">
                   <iframe
                     src={gameUrl}
-                    className="w-full h-[700px]"
+                    className="w-full h-[400px] sm:h-[500px] lg:h-[600px]"
                     allowFullScreen
                   />
                 </div>
               </motion.div>
+
+              {/* Phase Versions Navigation - Shows after game on mobile */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="lg:hidden w-full mt-8"
+              >
+                <div className="bg-gray-800 rounded-xl p-4 sm:p-6 shadow-xl">
+                  <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                    Phase Versions
+                  </h2>
+                  <nav className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {gameVersions.map((gameVersion) => (
+                      <Link
+                        key={gameVersion.name}
+                        href={gameVersion.href}
+                        className={`block px-3 py-2 sm:px-4 sm:py-3 rounded-lg transition-colors duration-200 text-center text-sm sm:text-base ${
+                          gameVersion.current
+                            ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                            : 'text-gray-300 hover:bg-gray-700'
+                        }`}
+                      >
+                        {gameVersion.name}
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Side Navigation */}
+            {/* Desktop Side Navigation */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="lg:w-64 shrink-0"
+              className="hidden lg:block lg:w-64 shrink-0"
             >
               <div className="sticky top-24 bg-gray-800 rounded-xl p-6 shadow-xl">
                 <h2 className="text-xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                  Game Versions
+                  Phase Versions
                 </h2>
                 <nav className="space-y-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-700">
                   {gameVersions.map((gameVersion) => (
