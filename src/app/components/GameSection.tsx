@@ -22,6 +22,7 @@ const GameSection = () => {
 
   const gameVersions = [
     { name: 'Glitch', href: '/glitch', current: false },
+    { name: 'Phase 10', href: '/phase10', current: false },
     { name: 'Phase 9', href: '/phase9', current: false },
     { name: 'Phase 8', href: '/', current: true },
     { name: 'Phase 7', href: '/phase7', current: false },
