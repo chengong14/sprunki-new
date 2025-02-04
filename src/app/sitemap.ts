@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const gameVersions = [
     '',  // 主页 (Phase 8)
     '/glitch',
+    '/phase10',
     '/phase9',
     '/phase7',
     '/phase6',
