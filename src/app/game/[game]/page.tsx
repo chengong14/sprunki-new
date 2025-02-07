@@ -42,8 +42,9 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
   // 解构时可以重命名 searchParams，如果不使用它也可以避免 ESLint 报告未使用
-  const { params, searchParams: _ignoredSearchParams } = props;
-
+  const { params, searchParams} = props;
+  
+  void searchParams;
   try {
     const decodedGame = decodeURIComponent(params.game || '');
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
