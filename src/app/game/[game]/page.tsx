@@ -8,7 +8,7 @@ interface Game {
 
 interface PageProps {
   params: {
-    game: string | string[] | undefined;
+    game: string;
   };
 }
 
@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageProps) {
   const { game } = await params;
-  const decodedGame = decodeURIComponent(game?.toString() || '');
+  const decodedGame = decodeURIComponent(game || '');
   
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const response = await fetch(`${baseUrl}/api/games`, { cache: 'no-store' });
