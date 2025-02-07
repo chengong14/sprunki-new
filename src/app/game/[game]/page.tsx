@@ -52,8 +52,12 @@ export default async function Page(props: PageProps) {
     console.log("Using baseUrl:", baseUrl);
     
     const response = await fetch(`${baseUrl}/api/games`, { 
-      cache: 'no-store',
-      next: { revalidate: 60 }
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 60 }, // Disable cache in production
+      cache: 'no-store'
     });
     
     if (!response.ok) {
@@ -62,14 +66,26 @@ export default async function Page(props: PageProps) {
     }
     
     const games = await response.json();
+    if (!Array.isArray(games)) {
+      console.error('Invalid games data format:', games);
+      throw new Error('Invalid games data format');
+    }
+    
     console.log("Total games fetched:", games.length);
     
     const page = games.find((g: Game) => g.game === decodedGame);
     console.log("Found game:", page ? "yes" : "no");
+    if (page) {
+      console.log("Game details:", { game: page.game, hasIframe: !!page.iframe });
+    }
 
     if (!page) {
       console.log("Game not found:", decodedGame);
       return notFound();
+    }
+    
+    if (!page.iframe) {
+      throw new Error(`Game ${decodedGame} found but has no iframe URL`);
     }
     
     return (
@@ -86,6 +102,6 @@ export default async function Page(props: PageProps) {
     );
   } catch (error) {
     console.error("Error in game page:", error);
-    throw error;
+    throw new Error(`Failed to render game page: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
