@@ -35,14 +35,15 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Page(props: any) {
-  const { params, searchParams} = props as {
-    params: { game: string };
-    searchParams: { [key: string]: string | string[] | undefined };
-  };
-  void searchParams;
-  // 即使实际传入的是一个普通对象，用 Promise.resolve 安全地支持 thenable 调用
-  const { game } = await Promise.resolve(params);
+interface PageProps {
+  params: Promise<{ game: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function Page(props: PageProps) {
+  const { params, searchParams } = props;
+  void await searchParams;
+  const { game } = await params;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   
