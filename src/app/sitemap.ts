@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getGames } from '@/app/lib/db_read';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.sprunki-new.org';
@@ -24,9 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const currentDate = new Date();
   
-  // 获取动态游戏页面
-  const gamesResponse = await fetch(`${baseUrl}/api/games`);
-  const games = await gamesResponse.json();
+  // 直接从数据库获取游戏列表
+  const games = await getGames();
   
   // 为每个路径创建站点地图条目
   const staticRoutes = gameVersions.map((route) => ({
@@ -37,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // 为动态游戏页面创建站点地图条目
-  const dynamicRoutes = games.map((game: { game: string }) => ({
+  const dynamicRoutes = games.map((game) => ({
     url: `${baseUrl}/game/${encodeURIComponent(game.game)}`,
     lastModified: currentDate,
     changeFrequency: 'weekly' as const,
