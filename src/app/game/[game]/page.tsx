@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   return games.map((game: Game) => ({ game: game.game }));
 }
 
-export default async function Page({ params }: { params: { game: string } }) {
+export default async function Page({ params }: { params: Promise<{ game: string }> }) {
   const { game } = await params;
   const decodedGame = decodeURIComponent(game || '');
   
