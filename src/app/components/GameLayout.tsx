@@ -74,7 +74,7 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                 className="text-center mb-8"
               >
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-                  {version === 'Glitch' ? 'Sprunki Glitch - A Unique Musical Experience' : `Sprunki ${version} - A Creative Music Gaming Experience`}
+                  {version === 'Glitch' ? 'Sprunki Glitch - A Unique Musical Experience' : `${version}`}
                 </h1>
               </motion.div>
 
@@ -89,6 +89,8 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                     src={gameUrl}
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px]"
                     allowFullScreen
+                    allow="autoplay; fullscreen"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-orientation-lock"
                   />
                 </div>
               </motion.div>
@@ -134,11 +136,11 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                 </h2>
                 <div className="game-cards-container">
                   {games.map((game) => (
-                    <Link key={game.id} href={`/game/${game.game}`} className="game-card group">
+                    <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
                       <div className="game-card-inner">
                         <div className="game-card-image">
                           <img
-                            src='/img/babies.jpg'
+                            src={`${game.img_url}`}
                             alt={`${game.game}`}
                           />
                           <div className="game-card-image-overlay" />

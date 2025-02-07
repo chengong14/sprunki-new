@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.sprunki-new.org';
   
   // 所有游戏版本的路径
@@ -24,13 +24,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const currentDate = new Date();
   
+  // 获取动态游戏页面
+  const gamesResponse = await fetch(`${baseUrl}/api/games`);
+  const games = await gamesResponse.json();
+  
   // 为每个路径创建站点地图条目
-  const routes = gameVersions.map((route) => ({
+  const staticRoutes = gameVersions.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: currentDate,
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8, // 主页优先级最高
+    priority: route === '' ? 1 : 0.9, // 主页优先级最高
   }));
 
-  return routes;
+  // 为动态游戏页面创建站点地图条目
+  const dynamicRoutes = games.map((game: { game: string }) => ({
+    url: `${baseUrl}/game/${encodeURIComponent(game.game)}`,
+    lastModified: currentDate,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9, // 动态游戏页面优先级稍低
+  }));
+
+  // 合并静态和动态路由
+  return [...staticRoutes, ...dynamicRoutes];
 } 

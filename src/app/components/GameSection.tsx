@@ -6,8 +6,10 @@ import { IoIosArrowUp } from "react-icons/io";
 import { Game } from '@/app/lib/types';
 
 const GameSection = () => {
+  // Use mounted state to ensure client-only code runs only after mounting.
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [games, setGames] = useState<Game[]>([]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,11 +129,11 @@ const GameSection = () => {
                 </h2>
                 <div className="game-cards-container">
                   {games.map((game) => (
-                    <Link key={game.id} href={`/game/${game.game}`} className="game-card group">
+                    <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
                       <div className="game-card-inner">
                         <div className="game-card-image">
                           <img
-                            src='/img/babies.jpg'
+                            src={`${game.img_url}`}
                             alt={`${game.game}`}
                           />
                           <div className="game-card-image-overlay" />
