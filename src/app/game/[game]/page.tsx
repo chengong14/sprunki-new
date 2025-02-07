@@ -37,7 +37,8 @@ export async function generateStaticParams() {
 
 export default async function Page({
   params,
-  searchParams: _searchParams,
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  searchParams,
 }: {
   params: {
     game: string;
