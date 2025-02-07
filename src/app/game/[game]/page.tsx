@@ -6,17 +6,10 @@ interface Game {
   description: string;
 }
 
-interface PageParams {
-  params: {
-    game: string;
-  };
-}
-
 interface PageProps {
   params: {
     game: string | string[] | undefined;
   };
-  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 // 替代 getStaticPaths 的写法
@@ -27,7 +20,7 @@ export async function generateStaticParams() {
   return games.map((game: Game) => ({ game: game.game }));
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { game } = await params;
   const decodedGame = decodeURIComponent(game?.toString() || '');
   

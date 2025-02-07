@@ -1,5 +1,3 @@
-import pool from '@/app/lib/db_connect';
-
 export async function GET(request: Request) {
     // Get the game parameter from the URL
     const gameParam = request.url.split('/game/')[1].split('/proxy')[0];
@@ -26,7 +24,7 @@ export async function GET(request: Request) {
             }
         });
         
-        let data = await response.text();
+        const data = await response.text();
         
         // // 注入必要的脚本
         // const scriptInjection = `
@@ -109,20 +107,4 @@ export async function GET(request: Request) {
         console.error('Proxy fetch error:', error);
         return new Response('Error fetching game content', { status: 500 });
     }
-}
-
-// Add OPTIONS handler for CORS preflight requests
-export async function OPTIONS(request: Request) {
-    return new Response(null, {
-        status: 204,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Origin, Accept, Authorization, X-Requested-With",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Max-Age": "86400",
-            "Content-Security-Policy": "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;",
-            "X-Frame-Options": "SAMEORIGIN"
-        },
-    });
 }
