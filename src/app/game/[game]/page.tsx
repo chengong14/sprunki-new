@@ -35,51 +35,45 @@ export async function generateStaticParams() {
   }
 }
 
-interface GamePageProps {
-  params: { game: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default async function Page({
-  params,
-  // 如果不使用 searchParams，可重命名避免 ESLint 警告
-  searchParams
-}: GamePageProps) {
+export default async function Page(props: any) {
+  const { params, searchParams} = props as {
+    params: { game: string };
+    searchParams: { [key: string]: string | string[] | undefined };
+  };
   void searchParams;
-  try {
-    const decodedGame = decodeURIComponent(params.game || '');
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    
-    const response = await fetch(`${baseUrl}/api/games`, { 
-      cache: 'no-store',
-      next: { revalidate: 60 } // 每分钟重新验证数据
-    });
+  // 即使实际传入的是一个普通对象，用 Promise.resolve 安全地支持 thenable 调用
+  const { game } = await Promise.resolve(params);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch game data: ${response.status}`);
-    }
-
-    const games = await response.json();
-    const page = games.find((g: { game: string; iframe: string; description: string }) => g.game === decodedGame);
-    
-    if (!page) {
-      return notFound();
-    }
-
-    return (
-      <GameLayout
-        gameUrl={page.iframe}
-        version={page.game}
-        description={
-          <div 
-            className="game-description"
-            dangerouslySetInnerHTML={{ __html: page.description }}
-          />
-        }
-      />
-    );
-  } catch (error) {
-    console.error('Error in game page:', error);
-    throw error; // 交由 Next.js 处理错误
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  
+  const response = await fetch(`${baseUrl}/api/games`, { 
+    cache: 'no-store',
+    next: { revalidate: 60 }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch game data: ${response.status}`);
   }
+  
+  const games = await response.json();
+  const page = games.find(
+    (g: { game: string; iframe: string; description: string }) => g.game === game
+  );
+  
+  if (!page) {
+    return notFound();
+  }
+  
+  return (
+    <GameLayout
+      gameUrl={page.iframe}
+      version={page.game}
+      description={
+        <div
+          className="game-description"
+          dangerouslySetInnerHTML={{ __html: page.description }}
+        />
+      }
+    />
+  );
 }
