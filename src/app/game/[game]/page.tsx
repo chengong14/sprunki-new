@@ -56,7 +56,7 @@ export default async function Page(props: PageProps) {
       headers: {
         'Accept': 'application/json',
       },
-      next: { revalidate: 60 }, // Disable cache in production
+      next: { revalidate: 0 }, // Disable cache in production
       cache: 'no-store'
     });
     
