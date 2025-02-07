@@ -6,12 +6,6 @@ interface Game {
   description: string;
 }
 
-interface PageProps {
-  params: {
-    game: string;
-  };
-}
-
 // 替代 getStaticPaths 的写法
 export async function generateStaticParams() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -20,7 +14,7 @@ export async function generateStaticParams() {
   return games.map((game: Game) => ({ game: game.game }));
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { game: string } }) {
   const { game } = await params;
   const decodedGame = decodeURIComponent(game || '');
   
