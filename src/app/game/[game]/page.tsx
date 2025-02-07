@@ -41,67 +41,43 @@ interface PageProps {
 }
 
 export default async function Page(props: PageProps) {
-  try {
-    const { params, searchParams } = props;
-    void await searchParams;
-    const { game } = await params;
-    const decodedGame = decodeURIComponent(game || '');
+  const { params, searchParams } = props;
+  void await searchParams;
+  const { game } = await params;
+  const decodedGame = decodeURIComponent(game || '');
 
-    console.log("Fetching game data for:", decodedGame);
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    console.log("Using baseUrl:", baseUrl);
-    
-    const response = await fetch(`${baseUrl}/api/games`, { 
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-      next: { revalidate: 0 }, // Disable cache in production
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) {
-      console.error(`API response error: ${response.status}`);
-      throw new Error(`Failed to fetch game data: ${response.status}`);
-    }
-    
-    const games = await response.json();
-    if (!Array.isArray(games)) {
-      console.error('Invalid games data format:', games);
-      throw new Error('Invalid games data format');
-    }
-    
-    console.log("Total games fetched:", games.length);
-    
-    const page = games.find((g: Game) => g.game === decodedGame);
-    console.log("Found game:", page ? "yes" : "no");
-    if (page) {
-      console.log("Game details:", { game: page.game, hasIframe: !!page.iframe });
-    }
-
-    if (!page) {
-      console.log("Game not found:", decodedGame);
-      return notFound();
-    }
-    
-    if (!page.iframe) {
-      throw new Error(`Game ${decodedGame} found but has no iframe URL`);
-    }
-    
-    return (
-      <GameLayout
-        gameUrl={page.iframe}
-        version={page.game}
-        description={
-          <div
-            className="game-description"
-            dangerouslySetInnerHTML={{ __html: page.description }}
-          />
-        }
-      />
-    );
-  } catch (error) {
-    console.error("Error in game page:", error);
-    throw new Error(`Failed to render game page: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  
+  const response = await fetch(`${baseUrl}/api/games`, { 
+    cache: 'no-store',
+    next: { revalidate: 60 }
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch game data: ${response.status}`);
   }
+  
+  const games = await response.json();
+  const page = await games.find(
+    (g: { game: string; iframe: string; description: string }) => g.game === decodedGame
+  );
+  console.log("game:", game)
+  // console.log("games:", games)
+
+  if (!page) {
+    return notFound();
+  }
+  
+  return (
+    <GameLayout
+      gameUrl={page.iframe}
+      version={page.game}
+      description={
+        <div
+          className="game-description"
+          dangerouslySetInnerHTML={{ __html: page.description }}
+        />
+      }
+    />
+  );
 }
