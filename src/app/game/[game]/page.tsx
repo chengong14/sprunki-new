@@ -37,10 +37,12 @@ export async function generateStaticParams() {
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: {
     game: string;
   };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   try {
     const decodedGame = decodeURIComponent(params.game || '');
