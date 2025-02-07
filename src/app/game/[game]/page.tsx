@@ -41,43 +41,51 @@ interface PageProps {
 }
 
 export default async function Page(props: PageProps) {
-  const { params, searchParams } = props;
-  void await searchParams;
-  const { game } = await params;
-  const decodedGame = decodeURIComponent(game || '');
+  try {
+    const { params, searchParams } = props;
+    void await searchParams;
+    const { game } = await params;
+    const decodedGame = decodeURIComponent(game || '');
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  
-  const response = await fetch(`${baseUrl}/api/games`, { 
-    cache: 'no-store',
-    next: { revalidate: 60 }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Failed to fetch game data: ${response.status}`);
-  }
-  
-  const games = await response.json();
-  const page = await games.find(
-    (g: { game: string; iframe: string; description: string }) => g.game === decodedGame
-  );
-  console.log("game:", game)
-  // console.log("games:", games)
+    console.log("Fetching game data for:", decodedGame);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    console.log("Using baseUrl:", baseUrl);
+    
+    const response = await fetch(`${baseUrl}/api/games`, { 
+      cache: 'no-store',
+      next: { revalidate: 60 }
+    });
+    
+    if (!response.ok) {
+      console.error(`API response error: ${response.status}`);
+      throw new Error(`Failed to fetch game data: ${response.status}`);
+    }
+    
+    const games = await response.json();
+    console.log("Total games fetched:", games.length);
+    
+    const page = games.find((g: Game) => g.game === decodedGame);
+    console.log("Found game:", page ? "yes" : "no");
 
-  if (!page) {
-    return notFound();
+    if (!page) {
+      console.log("Game not found:", decodedGame);
+      return notFound();
+    }
+    
+    return (
+      <GameLayout
+        gameUrl={page.iframe}
+        version={page.game}
+        description={
+          <div
+            className="game-description"
+            dangerouslySetInnerHTML={{ __html: page.description }}
+          />
+        }
+      />
+    );
+  } catch (error) {
+    console.error("Error in game page:", error);
+    throw error;
   }
-  
-  return (
-    <GameLayout
-      gameUrl={page.iframe}
-      version={page.game}
-      description={
-        <div
-          className="game-description"
-          dangerouslySetInnerHTML={{ __html: page.description }}
-        />
-      }
-    />
-  );
 }
