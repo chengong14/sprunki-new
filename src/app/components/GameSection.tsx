@@ -3,9 +3,13 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { IoIosArrowUp } from "react-icons/io";
+import { Game } from '@/app/lib/types';
 
 const GameSection = () => {
+  // Use mounted state to ensure client-only code runs only after mounting.
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [games, setGames] = useState<Game[]>([]);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +18,21 @@ const GameSection = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await fetch('/api/games');
+        if (!response.ok) throw new Error('Failed to fetch games');
+        const data = await response.json();
+        setGames(data);
+      } catch (error) {
+        console.error('Error fetching games:', error);
+      }
+    };
+
+    fetchGames();
   }, []);
 
   const scrollToTop = () => {
@@ -108,74 +127,23 @@ const GameSection = () => {
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                   More Sprunki Games
                 </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
-                  <Link href="/scratch" className="group">
-                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                      <div className="relative h-48">
-                        <img
-                          src="/img/scratch.jpg"
-                          alt="Scratch Game"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
+                <div className="game-cards-container">
+                  {games.map((game) => (
+                    <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
+                      <div className="game-card-inner">
+                        <div className="game-card-image">
+                          <img
+                            src={`${game.img_url}`}
+                            alt={`${game.game}`}
+                          />
+                          <div className="game-card-image-overlay" />
+                        </div>
+                        <div className="game-card-content">
+                          <h3 className="game-card-title">{game.game}</h3>
+                        </div>
                       </div>
-                      <div className="p-6">
-                        <h3 className="font-bold text-xl mb-2 text-purple-400">Scratch</h3>
-                        <p className="text-gray-300">It is the most popular Scratch project ever produced.</p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="/babies" className="group">
-                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                      <div className="relative h-48">
-                        <img
-                          src="/img/babies.jpg"
-                          alt="Babies Game"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-bold text-xl mb-2 text-purple-400">Babies</h3>
-                        <p className="text-gray-300">Cute baby characters special to the mode.</p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="/craft" className="group">
-                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                      <div className="relative h-48">
-                        <img
-                          src="/img/craft.jpg"
-                          alt="Craft Game"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-bold text-xl mb-2 text-purple-400">Craft</h3>
-                        <p className="text-gray-300">this version brings together the Cubic Pixel World and the Sprunki Incredibox mode.</p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="/relish" className="group">
-                    <div className="bg-gray-800 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                      <div className="relative h-48">
-                        <img
-                          src="/img/relish.jpg"
-                          alt="Relish Game"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity" />
-                      </div>
-                      <div className="p-6">
-                        <h3 className="font-bold text-xl mb-2 text-purple-400">Relish</h3>
-                        <p className="text-gray-300">Experience the unique blend of relish-themed musical elements in this special mode.</p>
-                      </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  ))}
                 </div>
               </motion.div>
 

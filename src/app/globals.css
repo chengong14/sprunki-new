@@ -51,3 +51,139 @@ html {
   background: rgb(139, 92, 246);
   color: white;
 }
+
+/* Game Cards Layout */
+.game-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .game-cards-container {
+    gap: 1rem;
+  }
+}
+
+.game-card {
+  flex: 1;
+  min-width: 100px;
+  max-width: 100px;
+  height: 6rem;
+}
+
+.game-card-inner {
+  height: 100%;
+  background-color: rgb(31, 41, 55);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.game-card-inner:hover {
+  transform: scale(1.05);
+}
+
+.game-card-image {
+  position: relative;
+  height: 4rem;
+}
+
+.game-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s;
+}
+
+.game-card-inner:hover .game-card-image-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.game-card-content {
+  padding: 0.5rem;
+}
+
+.game-card-title {
+  font-weight: 700;
+  font-size: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: rgb(167, 139, 250);
+  text-align: center;
+}
+
+/* Game Description Styles */
+.game-description {
+  margin: 2rem auto 0;
+  max-width: 48rem;
+  color: white;
+}
+
+.game-description > * + * {
+  margin-top: 2rem;
+}
+
+.game-description h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #a78bfa, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 640px) {
+  .game-description h2 {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-description h2 {
+    font-size: 2.25rem;
+  }
+}
+
+.game-description h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #a78bfa;
+  margin-bottom: 1rem;
+}
+
+.game-description h4 {
+  font-weight: bold;
+  color: #a78bfa;
+  margin-bottom: 0.5rem;
+}
+
+.game-description p {
+  font-size: 1.125rem;
+  color: #d1d5db;
+  line-height: 1.75;
+}
+
+.game-description ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  color: #d1d5db;
+}
+
+.game-description ul > * + * {
+  margin-top: 0.5rem;
+}
+
+.game-description .controls-section > * + * {
+  margin-top: 1.5rem;
+}
