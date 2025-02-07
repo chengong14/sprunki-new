@@ -8,10 +8,29 @@ interface Game {
 
 // 替代 getStaticPaths 的写法
 export async function generateStaticParams() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const response = await fetch(`${baseUrl}/api/games`, { cache: 'no-store' });
-  const games = await response.json();
-  return games.map((game: Game) => ({ game: game.game }));
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/games`, { cache: 'no-store' });
+    const games = await response.json();
+    return games.map((game: Game) => ({ game: game.game }));
+  } catch (error) {
+    // 提供默认的游戏列表作为后备方案
+    const fallbackGames = [
+      { game: 'phase1' },
+      { game: 'phase2' },
+      { game: 'phase3' },
+      { game: 'phase4' },
+      { game: 'phase5' },
+      { game: 'phase6' },
+      { game: 'phase7' },
+      { game: 'phase8' },
+      { game: 'phase9' },
+      { game: 'phase10' },
+      { game: 'glitch' }
+    ];
+    console.warn('Failed to fetch games during build, using fallback data:', error);
+    return fallbackGames;
+  }
 }
 
 export default async function Page({ params }: { params: Promise<{ game: string }> }) {
