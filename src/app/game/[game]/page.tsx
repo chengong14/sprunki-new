@@ -7,6 +7,13 @@ interface Game {
   description: string;
 }
 
+interface PageProps {
+  params: {
+    game: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 // 替代 getStaticPaths 的写法
 export async function generateStaticParams() {
   try {
@@ -35,7 +42,9 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Page({ params }: { params: { game: string } }) {
+export default async function Page({
+  params,
+}: Omit<PageProps, 'searchParams'>) {
   try {
     const decodedGame = decodeURIComponent(params.game || '');
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
