@@ -10,7 +10,7 @@ interface Game {
 // 替代 getStaticPaths 的写法
 export async function generateStaticParams() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const baseUrl = 'https://www.sprunki-new.org';
     const response = await fetch(`${baseUrl}/api/games`, { cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`Failed to fetch games: ${response.status}`);
@@ -46,7 +46,7 @@ export default async function Page(props: PageProps) {
   const { game } = await params;
   const decodedGame = decodeURIComponent(game || '');
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = 'https://www.sprunki-new.org';
   
   const response = await fetch(`${baseUrl}/api/games`, { 
     cache: 'no-store',
