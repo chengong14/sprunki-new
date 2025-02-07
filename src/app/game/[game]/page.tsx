@@ -44,6 +44,7 @@ export default async function Page(props: PageProps) {
   const { params, searchParams } = props;
   void await searchParams;
   const { game } = await params;
+  const decodedGame = decodeURIComponent(game || '');
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   
@@ -57,10 +58,12 @@ export default async function Page(props: PageProps) {
   }
   
   const games = await response.json();
-  const page = games.find(
-    (g: { game: string; iframe: string; description: string }) => g.game === game
+  const page = await games.find(
+    (g: { game: string; iframe: string; description: string }) => g.game === decodedGame
   );
-  
+  console.log("game:", game)
+  // console.log("games:", games)
+
   if (!page) {
     return notFound();
   }
