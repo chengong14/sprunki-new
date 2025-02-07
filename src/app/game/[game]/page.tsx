@@ -35,23 +35,22 @@ export async function generateStaticParams() {
   }
 }
 
-export default async function Page({
-  params,
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  searchParams,
-}: {
-  params: {
-    game: string;
-  };
+interface PageProps {
+  params: { game: string };
   searchParams: { [key: string]: string | string[] | undefined };
-}) {
+}
+
+export default async function Page(props: PageProps) {
+  // 解构时可以重命名 searchParams，如果不使用它也可以避免 ESLint 报告未使用
+  const { params, searchParams: _ignoredSearchParams } = props;
+
   try {
     const decodedGame = decodeURIComponent(params.game || '');
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     
     const response = await fetch(`${baseUrl}/api/games`, { 
       cache: 'no-store',
-      next: { revalidate: 60 } // Revalidate every minute
+      next: { revalidate: 60 } // 每分钟重新验证数据
     });
 
     if (!response.ok) {
@@ -79,6 +78,6 @@ export default async function Page({
     );
   } catch (error) {
     console.error('Error in game page:', error);
-    throw error; // Let Next.js handle the error
+    throw error; // 抛出错误，由 Next.js 处理
   }
 }
