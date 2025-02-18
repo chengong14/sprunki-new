@@ -3,11 +3,11 @@ import { Game } from '@/app/lib/types';
 
 async function fetchGames(): Promise<Game[]> {
   // 根据环境构建正确的URL
-  const url = typeof window === 'undefined'
-    ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/games`
-    : '/api/games';
+  // const url = typeof window === 'undefined'
+  //   ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/games`
+  //   : '/api/games';
   
-  // const url = 'https://www.sprunki-new.org/api/games';
+  const url = 'https://www.sprunki-new.org/api/games';
 
   const response = await fetch(url, {
     cache: 'force-cache',
