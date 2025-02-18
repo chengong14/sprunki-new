@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect, Suspense } from 'react';
 import { IoIosArrowUp } from "react-icons/io";
 import { useGames } from '@/app/hooks/useGames';
@@ -16,9 +17,13 @@ function GamesGrid() {
         <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
           <div className="game-card-inner">
             <div className="game-card-image">
-              <img
+              <Image
                 src={`${game.img_url}`}
                 alt={`${game.game}`}
+                width={400}
+                height={300}
+                className="w-full h-full object-cover"
+                priority={false}
               />
               <div className="game-card-image-overlay" />
             </div>
