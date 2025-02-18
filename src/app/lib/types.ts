@@ -5,5 +5,10 @@ export interface Game {
     description: string;
     iframe: string;
     img_url: string;
-  }
+    metadata?: {
+        title?: string;
+        description?: string;
+        keywords?: string[];
+    };
+}
   

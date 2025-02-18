@@ -1,17 +1,22 @@
 import GameLayout from '@/app/components/GameLayout';
 import { notFound } from 'next/navigation';
-
-interface Game {
-  game: string;
-  iframe: string;
-  description: string;
-}
+import { Game } from '@/app/lib/types';
+import { Metadata } from 'next';
 
 // 替代 getStaticPaths 的写法
 export async function generateStaticParams() {
   try {
-    const baseUrl = 'https://www.sprunki-new.org';
-    const response = await fetch(`${baseUrl}/api/games`, { cache: 'no-store' });
+    // Get the protocol and host from the environment or use a default
+    const baseUrl = 'https://www.sprunki-new.org'
+    // const baseUrl = typeof window === 'undefined'
+    //         ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}`
+    //         : '';
+    const response = await fetch(`${baseUrl}/api/games`, { 
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     if (!response.ok) {
       throw new Error(`Failed to fetch games: ${response.status}`);
     }
@@ -35,9 +40,60 @@ export async function generateStaticParams() {
   }
 }
 
-interface PageProps {
+type PageProps = {
   params: Promise<{ game: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { game } = await params;
+  const decodedGame = decodeURIComponent(game || '');
+  
+  const baseUrl = 'https://www.sprunki-new.org'
+  // const baseUrl = typeof window === 'undefined'
+  //           ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}`
+  //           : '';
+  const response = await fetch(`${baseUrl}/api/games`, { 
+    cache: 'no-store',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  if (!response.ok) {
+    return {
+      title: 'Game Not Found',
+      description: 'The requested game could not be found.'
+    };
+  }
+  
+  const games = await response.json();
+  const page = games.find((g: Game) => g.game === decodedGame);
+
+  if (!page) {
+    return {
+      title: 'Game Not Found',
+      description: 'The requested game could not be found.'
+    };
+  }
+  // console.log('metadata', page.metadata)
+  return {
+    title: page.metadata?.title || `${page.game} - Sprunki`,
+    description: page.metadata?.description || page.description,
+    keywords: page.metadata?.keywords || [page.game, 'sprunki', 'game'],
+    openGraph: {
+      title: page.metadata?.title || `${page.game} - Sprunki`,
+      description: page.metadata?.description || page.description,
+      images: [
+        {
+          url: page.metadata?.image || page.img_url,
+          width: 1200,
+          height: 630,
+          alt: `${page.game} preview image`
+        }
+      ]
+    }
+  };
 }
 
 export default async function Page(props: PageProps) {
@@ -45,12 +101,16 @@ export default async function Page(props: PageProps) {
   void await searchParams;
   const { game } = await params;
   const decodedGame = decodeURIComponent(game || '');
-
-  const baseUrl = 'https://www.sprunki-new.org';
   
+  const baseUrl = 'https://www.sprunki-new.org'
+  // const baseUrl = typeof window === 'undefined'
+  //           ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}`
+  //           : '';
   const response = await fetch(`${baseUrl}/api/games`, { 
     cache: 'no-store',
-    next: { revalidate: 60 }
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   
   if (!response.ok) {
@@ -58,11 +118,9 @@ export default async function Page(props: PageProps) {
   }
   
   const games = await response.json();
-  const page = await games.find(
-    (g: { game: string; iframe: string; description: string }) => g.game === decodedGame
+  const page = games.find(
+    (g: Game) => g.game === decodedGame
   );
-  console.log("game:", game)
-  // console.log("games:", games)
 
   if (!page) {
     return notFound();
@@ -70,6 +128,7 @@ export default async function Page(props: PageProps) {
   
   return (
     <GameLayout
+      // gameUrl={`/game/${decodeURIComponent(page.game)}/proxy?game=${page.game}`}
       gameUrl={page.iframe}
       version={page.game}
       description={

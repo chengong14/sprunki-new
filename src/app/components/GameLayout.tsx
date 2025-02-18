@@ -3,9 +3,68 @@ import Header from './Header';
 import Footer from './Footer';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { IoIosArrowUp } from "react-icons/io";
-import { Game } from '@/app/lib/types';
+import { useGames } from '@/app/hooks/useGames';
+import { ErrorBoundary } from 'react-error-boundary';
+
+// Separate component for the games grid
+function GamesGrid() {
+  const { data: games = [] } = useGames();
+  
+  return (
+    <div className="game-cards-container">
+      {games.map((game) => (
+        <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
+          <div className="game-card-inner">
+            <div className="game-card-image">
+              <img
+                src={`${game.img_url}`}
+                alt={`${game.game}`}
+              />
+              <div className="game-card-image-overlay" />
+            </div>
+            <div className="game-card-content">
+              <h3 className="game-card-title">{game.game}</h3>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+// Loading component
+function GamesSkeleton() {
+  return (
+    <div className="game-cards-container">
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+        <div key={i} className="game-card">
+          <div className="game-card-inner">
+            <div className="game-card-image animate-pulse">
+              <div className="w-full h-48 bg-gray-700 rounded-t-lg" />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-800 to-transparent opacity-50" />
+            </div>
+            <div className="game-card-content">
+              <div className="h-6 w-24 bg-gray-700 rounded animate-pulse mb-2" />
+              <div className="h-4 w-32 bg-gray-700/50 rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Error boundary component
+function GamesErrorBoundary({ error }: { error: Error }) {
+  return (
+    <div className="text-center text-red-500">
+      Failed to load games. Please try again later.
+      <pre className="mt-2 text-sm">{error.message}</pre>
+    </div>
+  );
+}
 
 interface GameLayoutProps {
   gameUrl: string;
@@ -15,7 +74,6 @@ interface GameLayoutProps {
 
 const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,21 +82,6 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await fetch('/api/games');
-        if (!response.ok) throw new Error('Failed to fetch games');
-        const data = await response.json();
-        setGames(data);
-      } catch (error) {
-        console.error('Error fetching games:', error);
-      }
-    };
-
-    fetchGames();
   }, []);
 
   const scrollToTop = () => {
@@ -84,13 +127,27 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                 transition={{ duration: 0.5 }}
                 className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-2xl p-1"
               >
-                <div className="bg-gray-800 rounded-xl overflow-hidden">
+                <div className="bg-gray-800 rounded-xl overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-pink-900/20 animate-pulse flex items-center justify-center">
+                    <div className="text-white/50 text-lg">Loading game...</div>
+                  </div>
                   <iframe
                     src={gameUrl}
                     className="w-full h-[400px] sm:h-[500px] lg:h-[600px]"
                     allowFullScreen
                     allow="autoplay; fullscreen"
+                    loading="lazy"
                     sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-orientation-lock"
+                    onLoad={(e) => {
+                      const iframe = e.target as HTMLIFrameElement;
+                      iframe.style.opacity = '1';
+                      const parent = iframe.parentElement;
+                      if (parent) {
+                        const loader = parent.querySelector('.bg-gradient-to-r');
+                        if (loader) loader.remove();
+                      }
+                    }}
+                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
                   />
                 </div>
               </motion.div>
@@ -134,24 +191,11 @@ const GameLayout = ({ gameUrl, version, description }: GameLayoutProps) => {
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
                   More Sprunki Games
                 </h2>
-                <div className="game-cards-container">
-                  {games.map((game) => (
-                    <Link key={game.game} href={`/game/${game.game}`} className="game-card group">
-                      <div className="game-card-inner">
-                        <div className="game-card-image">
-                          <img
-                            src={`${game.img_url}`}
-                            alt={`${game.game}`}
-                          />
-                          <div className="game-card-image-overlay" />
-                        </div>
-                        <div className="game-card-content">
-                          <h3 className="game-card-title">{game.game}</h3>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                <ErrorBoundary FallbackComponent={GamesErrorBoundary}>
+                  <Suspense fallback={<GamesSkeleton />}>
+                    <GamesGrid />
+                  </Suspense>
+                </ErrorBoundary>
               </motion.div>
 
               {/* Game Description Section */}
