@@ -6,6 +6,8 @@ async function fetchGames(): Promise<Game[]> {
   const url = typeof window === 'undefined'
     ? `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/games`
     : '/api/games';
+  
+  // const url = 'https://www.sprunki-new.org/api/games';
 
   const response = await fetch(url, {
     cache: 'force-cache',
@@ -19,6 +21,13 @@ async function fetchGames(): Promise<Game[]> {
     throw new Error('Failed to fetch games');
   }
   return response.json();
+  // const games = await getGames();
+    
+  // // Set cache control headers
+  // const response = NextResponse.json(games);
+  // response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+  
+  // return response;
 }
 
 export function useGames() {
